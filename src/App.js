@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
 function App() {
+  let URL = "http://api.weatherapi.com/v1/current.json?key=475658d171ce4be982d163211241201&q=London&aqi=no"
+  const [temp, setTemp] = useState('loading');
+  useEffect(()=>{
+  async function getDate(){
+      let promise = await fetch(URL);
+      promise.json().then((json)=>{
+        console.log(json);
+        setTemp(json.current.temp_f)
+      })
+    }
+    getDate();
+  }, []);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {temp}&deg;F
     </div>
   );
 }
